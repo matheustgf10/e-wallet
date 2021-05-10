@@ -6,7 +6,7 @@ A new Flutter project.
 ## Documentation
 :white_check_mark: [Requeriments Document](https://github.com/matheustgf10/e-wallet/blob/main/documentation/requirements_document.png)
 
-:white_checl_mark: [Use Case Diagram](https://github.com/matheustgf10/e-wallet/blob/main/documentation/Use_case_diagram.png)
+:white_check_mark: [Use Case Diagram](https://github.com/matheustgf10/e-wallet/blob/main/documentation/Use_case_diagram.png)
 
 :white_check_mark: [Class Diagram](https://github.com/matheustgf10/e-wallet/blob/main/documentation/Class_diagram.png)
 
