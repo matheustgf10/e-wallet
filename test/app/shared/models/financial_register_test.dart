@@ -18,6 +18,6 @@ void main() {
   });
 
   test("O ano deve ser igual ao ano atual", () {
-    expect(financialRegister.dateRegister.year, 2021);
+    expect(financialRegister.dateRegister.year, DateTime.now().year);
   });
 }

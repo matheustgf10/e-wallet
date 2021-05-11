@@ -40,13 +40,16 @@ class User {
     return account;
   }
 
-  Account getAccount({String? idAccount}) {
+  dynamic getAccount({String? idAccount}) {
     late Account account;
-    account =
-        accountList.firstWhere((element) => element.idAccount == idAccount);
+    dynamic existsAccount = false;
 
-    print(account.runtimeType);
-    return account;
+    if (this.checkAccountExists(idAccount: idAccount)) {
+      account = accountList.firstWhere(existsAccount =
+          (element) => (element.idAccount == idAccount) ? true : false);
+    }
+
+    return (existsAccount) ? account : null;
   }
 
   bool deleteAccount({String? idAccount}) {
@@ -55,7 +58,8 @@ class User {
     if (this.checkAccountExists(idAccount: idAccount)) {
       accountList.removeWhere(isRemoved =
           (element) => (element.idAccount == idAccount) ? true : false);
-    } else {}
+    }
+
     return isRemoved;
   }
 

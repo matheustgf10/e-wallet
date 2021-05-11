@@ -46,12 +46,7 @@ void main() {
         "Se o item existir na lista, a função getAccount deve retornar um Account",
         () {
       expect(user.getAccount(idAccount: '123'), account);
-    });
-
-    test(
-        "Se o item não existir na lista, a função getAccount deve retornar um StateError",
-        () {
-      expect(user.getAccount(idAccount: '1234'), isA<Account>());
+      expect(user.getAccount(idAccount: '123'), isA<Account>());
     });
   });
 
