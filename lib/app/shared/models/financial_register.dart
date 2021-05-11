@@ -1,15 +1,15 @@
-import 'package:ewallet/app/utils/categories.dart';
+import 'dart:math';
 
 class FinancialRegister {
-  late String idFinancialRegister;
-  late String description;
-  late double value;
-  late String category;
-  late DateTime dateRegister;
-  late String idAccount;
+  final String idFinancialRegister=Random.secure().toString();
+  final String description;
+  final double value;
+  final String category;
+  final DateTime dateRegister;
+  final String idAccount;
 
   FinancialRegister({
-    required this.idFinancialRegister,
+    //required this.idFinancialRegister,
     required this.description,
     required this.value,
     required this.category,
