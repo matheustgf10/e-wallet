@@ -19,11 +19,8 @@ void main() {
         password: "123jose",
         accountList: [
           account = Account(
-              idAccount: '123',
               name: 'Conta 1',
               color: Colors.amber,
-              registerList: [],
-              totalValue: 99.99,
               flagAccount: true),
         ]);
 

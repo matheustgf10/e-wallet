@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   FinancialRegister financialRegister = FinancialRegister(
-    idFinancialRegister: "HASH1",
     description: "ALMOÇO",
     value: 9.99,
     category: "COMIDA",

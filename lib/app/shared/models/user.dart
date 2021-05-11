@@ -29,11 +29,8 @@ class User {
 
   Account createAccount({String? name, Color? color}) {
     Account account = Account(
-      idAccount: '',
       name: name.toString(),
       color: color!,
-      registerList: [],
-      totalValue: 0,
       flagAccount: true,
     );
 
