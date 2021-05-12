@@ -2,16 +2,16 @@ import 'dart:ui';
 
 import 'package:ewallet/app/shared/models/account.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class User {
-  late String idUser;
+  late String idUser = Uuid().v4();
   late String name;
   late String login;
   late String password;
   late List<Account> accountList;
 
   User({
-    required this.idUser,
     required this.name,
     required this.login,
     required this.password,
@@ -24,7 +24,12 @@ class User {
 
     this.accountList.add(account);
 
-    return (accountList.isNotEmpty) ? true : false;
+    return accountList.contains(account);
+  }
+
+  bool checkAccountExists({String? idAccount}) {
+    bool check = accountList.any((element) => element.idAccount == idAccount);
+    return check;
   }
 
   Account createAccount({String? name, Color? color}) {
@@ -42,11 +47,23 @@ class User {
     dynamic existsAccount = false;
 
     if (this.checkAccountExists(idAccount: idAccount)) {
-      account = accountList.firstWhere(existsAccount =
-          (element) => (element.idAccount == idAccount) ? true : false);
+      account = accountList.firstWhere(
+          existsAccount = (element) => (element.idAccount == idAccount));
     }
 
     return (existsAccount) ? account : null;
+  }
+
+  bool updateAccount({required String idAccount, required Account account}) {
+    if (checkAccountExists(idAccount: idAccount)) {
+      int index =
+          accountList.indexWhere((element) => (element.idAccount == idAccount));
+
+      accountList[index].name = account.name;
+      accountList[index].color = account.color;
+      return true;
+    }
+    return false;
   }
 
   bool deleteAccount({String? idAccount}) {
@@ -58,10 +75,5 @@ class User {
     }
 
     return isRemoved;
-  }
-
-  bool checkAccountExists({String? idAccount}) {
-    bool check = accountList.any((element) => element.idAccount == idAccount);
-    return check;
   }
 }
