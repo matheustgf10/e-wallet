@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class User {
-  late String idUser = 'User'+Uuid().v4();
+  late String idUser = 'USER' + Uuid().v4();
   late String name;
   late String login;
   late String password;
