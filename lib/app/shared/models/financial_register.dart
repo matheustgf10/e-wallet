@@ -1,7 +1,7 @@
 import 'package:uuid/uuid.dart';
 
 class FinancialRegister {
-  String idFinancialRegister = Uuid().v4();
+  String idFinancialRegister = 'FinancialRegister'+Uuid().v4();
   String description;
   double value;
   String category;

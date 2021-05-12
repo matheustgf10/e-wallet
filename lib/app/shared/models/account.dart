@@ -5,7 +5,7 @@ import 'package:uuid/uuid.dart';
 
 class Account {
   late String name;
-  final String idAccount = Uuid().v4();
+  final String idAccount = 'Account'+Uuid().v4();
   late List<FinancialRegister> financialRegisterList = [];
   late double totalValue;
   late Color color;
