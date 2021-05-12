@@ -13,15 +13,12 @@ void main() {
 
   setUpAll(() {
     user = User(
-        idUser: "HASH_USER",
         name: "José Silva",
         login: "jose123",
         password: "123jose",
         accountList: [
-          account = Account(
-              name: 'Conta 1',
-              color: Colors.amber,
-              flagAccount: true),
+          account =
+              Account(name: 'Conta 1', color: Colors.amber, flagAccount: true),
         ]);
 
     accountMock = AccountMock();
@@ -61,6 +58,17 @@ void main() {
         "Se o item não existir na lista, a função checkAccountExists deve retornar false",
         () {
       expect(user.checkAccountExists(idAccount: '1234'), false);
+    });
+
+    test("Se a conta for atualizada, deve retornar true", () {
+      var account = Account(
+        name: 'Conta 2',
+        color: Colors.green,
+        flagAccount: true,
+      );
+
+      expect(user.updateAccount(idAccount: '123', account: account), true);
+      expect(user.accountList[0].name, 'Conta 2');
     });
   });
 }
