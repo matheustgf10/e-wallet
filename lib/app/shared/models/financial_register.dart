@@ -1,12 +1,12 @@
-import 'dart:math';
+import 'package:uuid/uuid.dart';
 
 class FinancialRegister {
-  final String idFinancialRegister=Random.secure().toString();
-  final String description;
-  final double value;
-  final String category;
-  final DateTime dateRegister;
-  final String idAccount;
+  String idFinancialRegister = Uuid().v4();
+  String description;
+  double value;
+  String category;
+  DateTime dateRegister;
+  String idAccount;
 
   FinancialRegister({
     //required this.idFinancialRegister,
@@ -16,4 +16,10 @@ class FinancialRegister {
     required this.dateRegister,
     required this.idAccount,
   });
+
+  void printFinancialRegister() {
+    print(
+      '[ $idFinancialRegister ,$description ,$value ,$category ,$dateRegister ,$idAccount ] ',
+    );
+  }
 }

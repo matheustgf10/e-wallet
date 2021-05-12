@@ -1,10 +1,11 @@
 import 'package:ewallet/app/shared/models/financial_register.dart';
 import 'dart:ui';
-import 'dart:math';
+
+import 'package:uuid/uuid.dart';
 
 class Account {
   late String name;
-  final String idAccount = Random.secure().toString();
+  final String idAccount = Uuid().v4();
   late List<FinancialRegister> financialRegisterList = [];
   late double totalValue;
   late Color color;
@@ -36,16 +37,63 @@ class Account {
     return [...financialRegisterList];
   }
 
-  bool deleteFinancialRegister(String idFinancialRegister){
-    
-    financialRegisterList.removeWhere((element) => element.idFinancialRegister==idFinancialRegister );
-    return true;
+  dynamic getFinancialRegister({String? idFinancialRegister}) {
+    if (checkFinancialRegisterExists(
+        idFinancialRegister: idFinancialRegister)) {
+      return financialRegisterList.singleWhere(
+          (element) => element.idFinancialRegister == idFinancialRegister);
+    }
+    return null;
   }
 
-  //bool updateFinancialRegistes() {}
+  bool updateFinancialRegister(
+      {required String idFinancialRegister,
+      required FinancialRegister editedFinancialRegister}) {
+    if (checkFinancialRegisterExists(
+        idFinancialRegister: idFinancialRegister)) {
+      int indexfr = financialRegisterList.indexWhere(
+          (element) => element.idFinancialRegister == idFinancialRegister);
+      financialRegisterList[indexfr].description =
+          editedFinancialRegister.description;
+      financialRegisterList[indexfr].value = editedFinancialRegister.value;
+      financialRegisterList[indexfr].idAccount =
+          editedFinancialRegister.idAccount;
+      financialRegisterList[indexfr].dateRegister =
+          editedFinancialRegister.dateRegister;
+      financialRegisterList[indexfr].category =
+          editedFinancialRegister.category;
+      return true;
+    }
+    return false;
+  }
 
-  //FinancialRegister getFinantialRegister(String idFinancialRegister){}
+  bool deleteFinancialRegister({String? idFinancialRegister}) {
+    if (checkFinancialRegisterExists(
+        idFinancialRegister: idFinancialRegister)) {
+      financialRegisterList.removeWhere(
+          (element) => element.idFinancialRegister == idFinancialRegister);
+      return true;
+    }
+    return false;
+  }
 
-  //double getTotalValue() {}
+  bool checkFinancialRegisterExists({String? idFinancialRegister}) {
+    bool check = financialRegisterList
+        .any((element) => element.idFinancialRegister == idFinancialRegister);
+    return check;
+  }
 
+  void printAllFinancialRegisters() {
+    financialRegisterList.forEach((element) {
+      element.printFinancialRegister();
+    });
+  }
+
+  double getTotalValue() {
+    double totalValue = 0;
+    financialRegisterList.forEach((element) {
+      totalValue += element.value;
+    });
+    return totalValue;
+  }
 }
