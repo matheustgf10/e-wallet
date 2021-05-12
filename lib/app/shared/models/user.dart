@@ -54,6 +54,10 @@ class User {
     return (existsAccount) ? account : null;
   }
 
+  List<Account> getAllAccount() {
+    return [...accountList];
+  }
+
   bool updateAccount({required String idAccount, required Account account}) {
     if (checkAccountExists(idAccount: idAccount)) {
       int index =

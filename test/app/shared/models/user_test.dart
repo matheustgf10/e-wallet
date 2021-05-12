@@ -70,5 +70,11 @@ void main() {
       expect(user.updateAccount(idAccount: '123', account: account), true);
       expect(user.accountList[0].name, 'Conta 2');
     });
+
+    test(
+        "Se existirem contas cadastradas, a função getAllAccounts deve retornar uma Lista de Contas",
+        () {
+      expect(user.getAllAccount(), isA<List<Account>>());
+    });
   });
 }
