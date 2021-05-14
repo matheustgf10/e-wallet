@@ -8,32 +8,44 @@ import 'package:mockito/mockito.dart';
 class AccountMock extends Mock implements Account {}
 
 void main() {
-  User user = User(
-      name: "José Silva",
-      login: "jose123",
-      password: "123jose",
-      accountList: [
-        Account(nameAccount: 'conta1', color: Colors.amber, flagAccount: true),
-      ]);
+  late Account account;
+  late User user;
+  late FinancialRegister financialRegister;
+
+  setUpAll(() {
+    user = User(
+        name: "José Silva",
+        login: "jose123",
+        password: "123jose",
+        accountList: [
+          account = Account(
+              nameAccount: 'Conta 1', color: Colors.amber, flagAccount: true),
+        ]);
+
+    financialRegister = FinancialRegister(
+        description: '',
+        value: 99.99,
+        category: 'FOOD',
+        dateRegister: DateTime.now(),
+        nameAccount: 'Conta 1');
+    user.financialRegisterList = [financialRegister];
+  });
 
   group('Account crud test', () {
     test("O tamanho de accountList deve ser 1", () {
       expect(user.accountList.length, 1);
     });
-    test("A funçãcreate deve retornar true", () {
-      expect(user.createAccount(nameAccount: 'conta2'), true);
-    });
-
-    test("A função createAccount deve retornar um Account", () {
-      expect(user.createAccount(), AccountMock());
+    test("A função create deve retornar true", () {
+      expect(
+          user.createAccount(nameAccount: 'conta2', color: Colors.blue), true);
     });
 
     group('user.getAccount() Test', () {
       test(
           "Se o item existir na lista, a função getAccount deve retornar um Account",
           () {
-        expect(user.getAccount(nameAccount: '123'), account);
-        expect(user.getAccount(nameAccount: '123'), isA<Account>());
+        expect(user.getAccount(nameAccount: 'Conta 1'), account);
+        expect(user.getAccount(nameAccount: 'Conta 1'), isA<Account>());
       });
     });
 
@@ -43,8 +55,9 @@ void main() {
       expect(user.deleteAccount(nameAccount: '1234'), false);
     });
     group('user.checkAccountExists Test', () {
-      test("A função checkAccountExists deve retornar true", () {
-        expect(user.checkAccountExists(nameAccount: '123'), true);
+      test("A função checkAccountExists deve retornar true, se a Conta existir",
+          () {
+        expect(user.checkAccountExists(nameAccount: 'Conta 1'), true);
       });
 
       test(
@@ -52,16 +65,39 @@ void main() {
           () {
         expect(user.checkAccountExists(nameAccount: '1234'), false);
       });
+      group("Teste da função updateAccount() ", () {
+        test("Se a conta for atualizada, deve retornar true", () {
+          var account = Account(
+            nameAccount: 'Conta 2',
+            color: Colors.green,
+            flagAccount: true,
+          );
 
-      test("Se a conta for atualizada, deve retornar true", () {
-        var account = Account(
-          nameAccount: 'Conta 2',
-          color: Colors.green,
-          flagAccount: true,
-        );
+          expect(user.updateAccount(nameAccount: 'Conta 1', account: account),
+              true);
+          expect(user.accountList[0].nameAccount, 'Conta 2');
+        });
 
-        expect(user.updateAccount(nameAccount: '123', account: account), true);
-        expect(user.accountList[0].nameAccount, 'Conta 2');
+        test(
+            "A conta não poderá ser atualizada se houver outra com o mesmo nome, o retorno deve ser: false",
+            () {
+          Account account3 = Account(
+            nameAccount: 'Conta 3',
+            color: Colors.amber,
+            flagAccount: true,
+          );
+
+          Account newAccount = Account(
+            nameAccount: 'Conta 3',
+            color: Colors.black,
+            flagAccount: true,
+          );
+
+          user.accountList.add(account3);
+          expect(
+              user.updateAccount(nameAccount: 'Conta 1', account: newAccount),
+              false);
+        });
       });
 
       test(
@@ -89,14 +125,17 @@ void main() {
     });
 
     test('deve retornar um financialRegister', () {
-      expect(user.getFinancialRegister(idFinancialRegister: id1),
+      expect(
+          user.getFinancialRegister(
+              idFinancialRegister:
+                  user.financialRegisterList.first.idFinancialRegister),
           isA<FinancialRegister>());
     });
 
-    group('testes de updateFinaccialRegister: ', () {
+    group('testes de updateFinancialRegister: ', () {
       test('Deve retornar true ao atualizar um financialRegister', () {
         FinancialRegister newFinancialRegister = FinancialRegister(
-          nameAccount: user.nameAccount,
+          nameAccount: 'Conta 1',
           description: 'tire',
           category: 'CAR',
           dateRegister: DateTime.now(),
@@ -105,14 +144,15 @@ void main() {
         expect(
             user.updateFinancialRegister(
                 editedFinancialRegister: newFinancialRegister,
-                idFinancialRegister: id1),
+                idFinancialRegister:
+                    user.financialRegisterList.first.idFinancialRegister),
             true);
       });
       test(
           'Deve retornar false ao tentar atualizar um financialRegister que não existe',
           () {
         FinancialRegister newFinancialRegister = FinancialRegister(
-          nameAccount: user.nameAccount,
+          nameAccount: 'Conta 1',
           description: 'tire',
           category: 'CAR',
           dateRegister: DateTime.now(),
@@ -128,14 +168,19 @@ void main() {
 
     group(' testes de deleteFinancialRegister: ', () {
       test('deve retornar true deletar o primeiro financialRegister', () {
-        expect(user.deleteFinancialRegister(idFinancialRegister: id1), true);
+        expect(
+            user.deleteFinancialRegister(
+                idFinancialRegister:
+                    user.financialRegisterList.first.idFinancialRegister),
+            true);
       });
 
       test(
           'deve retornar false ao tentar deletar o elemento que ja foi deletado',
           () {
-        user.deleteFinancialRegister(idFinancialRegister: id1);
-        expect(user.deleteFinancialRegister(idFinancialRegister: id1), false);
+        var id = user.financialRegisterList.first.idFinancialRegister;
+        user.deleteFinancialRegister(idFinancialRegister: id);
+        expect(user.deleteFinancialRegister(idFinancialRegister: id), false);
       });
     });
 

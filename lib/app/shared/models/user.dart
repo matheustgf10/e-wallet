@@ -20,12 +20,9 @@ class User {
     required this.accountList,
   });
 
-
- //crud Account
+  //crud Account
   bool checkAccountExists({String? nameAccount}) {
-    bool check =
-        accountList.any((element) => element.nameAccount == nameAccount);
-    return check;
+    return accountList.any((element) => element.nameAccount == nameAccount);
   }
 
   bool createAccount({String? nameAccount, Color? color}) {
@@ -33,38 +30,41 @@ class User {
       return false;
     }
     Account account = Account(
-        nameAccount: name!,
-        color: color!,
-        flagAccount: true,
-      );
+      nameAccount: name,
+      color: color ?? Colors.red,
+      flagAccount: true,
+    );
     this.accountList.add(account);
     return accountList.contains(account);
   }
 
   dynamic getAccount({String? nameAccount}) {
-    late Account account;
-    dynamic existsAccount = false;
-
     if (this.checkAccountExists(nameAccount: nameAccount)) {
-      account = accountList.firstWhere(
-          existsAccount = (element) => (element.nameAccount == nameAccount));
+      return accountList
+          .firstWhere((element) => (element.nameAccount == nameAccount));
     }
 
-    return (existsAccount) ? account : null;
+    return null;
   }
 
   List<Account> getAllAccount() {
     return [...accountList];
   }
 
+  // ! Refatorar com o idAccount ao invés de nameAccount
+  // ! para corrigir bug de atualização de conta
   bool updateAccount({required String nameAccount, required Account account}) {
     if (checkAccountExists(nameAccount: nameAccount)) {
-      int index = accountList
-          .indexWhere((element) => (element.nameAccount == nameAccount));
+      bool existsOther = accountList
+          .any((element) => element.nameAccount == account.nameAccount);
+      if (existsOther == false) {
+        int index = accountList
+            .indexWhere((element) => (element.nameAccount == nameAccount));
 
-      accountList[index].nameAccount = account.nameAccount;
-      accountList[index].color = account.color;
-      return true;
+        accountList[index].nameAccount = account.nameAccount;
+        accountList[index].color = account.color;
+        return true;
+      }
     }
     return false;
   }
@@ -80,8 +80,12 @@ class User {
     return isRemoved;
   }
 
- 
- //crud FinancialRegister
+  //crud FinancialRegister
+  bool checkFinancialRegisterExists({String? idFinancialRegister}) {
+    return financialRegisterList
+        .any((element) => element.idFinancialRegister == idFinancialRegister);
+  }
+
   bool createFinancialRegister(
       {required String description,
       required double value,
@@ -127,12 +131,6 @@ class User {
       return true;
     }
     return false;
-  }
-
-  bool checkFinancialRegisterExists({String? idFinancialRegister}) {
-    bool check = financialRegisterList
-        .any((element) => element.idFinancialRegister == idFinancialRegister);
-    return check;
   }
 
   bool deleteFinancialRegister({String? idFinancialRegister}) {
