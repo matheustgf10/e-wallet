@@ -27,7 +27,7 @@ void main() {
         value: 99.99,
         category: 'FOOD',
         dateRegister: DateTime.now(),
-        nameAccount: 'Conta 1');
+        idAccount: account.idAccount);
     user.financialRegisterList = [financialRegister];
   });
 
@@ -40,71 +40,62 @@ void main() {
           user.createAccount(nameAccount: 'conta2', color: Colors.blue), true);
     });
 
-    group('user.getAccount() Test', () {
+    test(
+        "Se o item existir na lista, a função getAccount deve retornar um Account",
+        () {
+      expect(user.getAccount(idAccount: account.idAccount), account);
+      expect(user.getAccount(idAccount: account.idAccount), isA<Account>());
+    });
+
+    test(
+        "A função checkAccountExists deve retornar false, se a Conta não existir",
+        () {
+      expect(user.deleteAccount(idAccount: '1234'), false);
+    });
+
+    test("A função checkAccountExists deve retornar true, se a Conta existir",
+        () {
+      expect(user.checkAccountExists(idAccount: account.idAccount), true);
+    });
+
+    group("Teste da função updateAccount() ", () {
+      test("Se a conta for atualizada, deve retornar true", () {
+        var acc = Account(
+          nameAccount: 'Conta 2',
+          color: Colors.green,
+          flagAccount: true,
+        );
+
+        expect(
+            user.updateAccount(idAccount: account.idAccount, account: acc), true);
+        expect(user.accountList[0].nameAccount, 'Conta 2');
+      });
+
       test(
-          "Se o item existir na lista, a função getAccount deve retornar um Account",
+          "A conta não poderá ser atualizada se houver outra com o mesmo nome, o retorno deve ser: false",
           () {
-        expect(user.getAccount(nameAccount: 'Conta 1'), account);
-        expect(user.getAccount(nameAccount: 'Conta 1'), isA<Account>());
+        Account account3 = Account(
+          nameAccount: 'Conta 3',
+          color: Colors.amber,
+          flagAccount: true,
+        );
+
+        Account newAccount = Account(
+          nameAccount: 'Conta 3',
+          color: Colors.black,
+          flagAccount: true,
+        );
+
+        user.accountList.add(account3);
+        expect(user.updateAccount(idAccount: account.idAccount, account: newAccount),
+            false);
       });
     });
 
     test(
-        "Se o item não existir na lista, a função deleteAccount deve retornar false",
+        "Se existirem contas cadastradas, a função getAllAccounts deve retornar uma Lista de Contas",
         () {
-      expect(user.deleteAccount(nameAccount: '1234'), false);
-    });
-    group('user.checkAccountExists Test', () {
-      test("A função checkAccountExists deve retornar true, se a Conta existir",
-          () {
-        expect(user.checkAccountExists(nameAccount: 'Conta 1'), true);
-      });
-
-      test(
-          "Se o item não existir na lista, a função checkAccountExists deve retornar false",
-          () {
-        expect(user.checkAccountExists(nameAccount: '1234'), false);
-      });
-      group("Teste da função updateAccount() ", () {
-        test("Se a conta for atualizada, deve retornar true", () {
-          var account = Account(
-            nameAccount: 'Conta 2',
-            color: Colors.green,
-            flagAccount: true,
-          );
-
-          expect(user.updateAccount(nameAccount: 'Conta 1', account: account),
-              true);
-          expect(user.accountList[0].nameAccount, 'Conta 2');
-        });
-
-        test(
-            "A conta não poderá ser atualizada se houver outra com o mesmo nome, o retorno deve ser: false",
-            () {
-          Account account3 = Account(
-            nameAccount: 'Conta 3',
-            color: Colors.amber,
-            flagAccount: true,
-          );
-
-          Account newAccount = Account(
-            nameAccount: 'Conta 3',
-            color: Colors.black,
-            flagAccount: true,
-          );
-
-          user.accountList.add(account3);
-          expect(
-              user.updateAccount(nameAccount: 'Conta 1', account: newAccount),
-              false);
-        });
-      });
-
-      test(
-          "Se existirem contas cadastradas, a função getAllAccounts deve retornar uma Lista de Contas",
-          () {
-        expect(user.getAllAccount(), isA<List<Account>>());
-      });
+      expect(user.getAllAccount(), isA<List<Account>>());
     });
   });
 
@@ -113,7 +104,7 @@ void main() {
       expect(
           user.createFinancialRegister(
               description: 'tacos',
-              nameAccount: 'conta1',
+              idAccount: account.idAccount,
               category: 'food',
               date: DateTime.now(),
               value: 9.99),
@@ -135,7 +126,7 @@ void main() {
     group('testes de updateFinancialRegister: ', () {
       test('Deve retornar true ao atualizar um financialRegister', () {
         FinancialRegister newFinancialRegister = FinancialRegister(
-          nameAccount: 'Conta 1',
+          idAccount: account.idAccount,
           description: 'tire',
           category: 'CAR',
           dateRegister: DateTime.now(),
@@ -152,7 +143,7 @@ void main() {
           'Deve retornar false ao tentar atualizar um financialRegister que não existe',
           () {
         FinancialRegister newFinancialRegister = FinancialRegister(
-          nameAccount: 'Conta 1',
+          idAccount: account.idAccount,
           description: 'tire',
           category: 'CAR',
           dateRegister: DateTime.now(),

@@ -6,7 +6,7 @@ class FinancialRegister {
   double value;
   String category;
   DateTime dateRegister;
-  String nameAccount;
+  String idAccount;
 
   FinancialRegister({
     //required this.idFinancialRegister,
@@ -14,12 +14,12 @@ class FinancialRegister {
     required this.value,
     required this.category,
     required this.dateRegister,
-    required this.nameAccount,
+    required this.idAccount,
   });
 
   @override
   String toString() {
     // TODO: implement toString
-    return '[id:$idFinancialRegister ,description:$description,value:$value,category:$category,date:$dateRegister,nameAccount:$nameAccount]';
+    return '[id:$idFinancialRegister ,description:$description,value:$value,category:$category,date:$dateRegister,nameAccount:$idAccount]';
   }
 }

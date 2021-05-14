@@ -21,16 +21,13 @@ class User {
   });
 
   //crud Account
-  bool checkAccountExists({String? nameAccount}) {
-    return accountList.any((element) => element.nameAccount == nameAccount);
+  bool checkAccountExists({String? idAccount}) {
+    return accountList.any((element) => element.idAccount == idAccount);
   }
 
   bool createAccount({String? nameAccount, Color? color}) {
-    if (checkAccountExists(nameAccount: name)) {
-      return false;
-    }
     Account account = Account(
-      nameAccount: name,
+      nameAccount: nameAccount ?? '',
       color: color ?? Colors.red,
       flagAccount: true,
     );
@@ -38,10 +35,10 @@ class User {
     return accountList.contains(account);
   }
 
-  dynamic getAccount({String? nameAccount}) {
-    if (this.checkAccountExists(nameAccount: nameAccount)) {
+  dynamic getAccount({String? idAccount}) {
+    if (this.checkAccountExists(idAccount: idAccount)) {
       return accountList
-          .firstWhere((element) => (element.nameAccount == nameAccount));
+          .firstWhere((element) => (element.idAccount == idAccount));
     }
 
     return null;
@@ -51,35 +48,38 @@ class User {
     return [...accountList];
   }
 
-  // ! Refatorar com o idAccount ao invés de nameAccount
-  // ! para corrigir bug de atualização de conta
-  bool updateAccount({required String nameAccount, required Account account}) {
-    if (checkAccountExists(nameAccount: nameAccount)) {
-      bool existsOther = accountList
-          .any((element) => element.nameAccount == account.nameAccount);
-      if (existsOther == false) {
-        int index = accountList
-            .indexWhere((element) => (element.nameAccount == nameAccount));
+  bool updateAccount({required String idAccount, required Account account}) {
+    if (checkAccountExists(idAccount: idAccount)) {
+      if(!(accountList.any((element) => element.nameAccount==account.nameAccount))){
+        int index =
+          accountList.indexWhere((element) => (element.idAccount == idAccount));
 
-        accountList[index].nameAccount = account.nameAccount;
-        accountList[index].color = account.color;
-        return true;
+      accountList[index].nameAccount = account.nameAccount;
+      accountList[index].color = account.color;
+      return true;
       }
     }
     return false;
   }
 
-  bool deleteAccount({String? nameAccount}) {
+  bool deleteAccount({String? idAccount}) {
     dynamic isRemoved = false;
-
-    if (this.checkAccountExists(nameAccount: nameAccount)) {
+    if (checkAccountExists(idAccount: idAccount)) {
       accountList.removeWhere(isRemoved =
-          (element) => (element.nameAccount == nameAccount) ? true : false);
+          (element) => (element.idAccount == idAccount) ? true : false);
     }
 
     return isRemoved;
   }
 
+  double getTotalValue() {
+    double totalValue = 0;
+    financialRegisterList.forEach((element) {
+      totalValue += element.value;
+    });
+    return totalValue;
+  }
+  
   //crud FinancialRegister
   bool checkFinancialRegisterExists({String? idFinancialRegister}) {
     return financialRegisterList
@@ -91,13 +91,13 @@ class User {
       required double value,
       required String category,
       required DateTime date,
-      required String nameAccount}) {
+      required String idAccount}) {
     FinancialRegister newFinancialRegister = FinancialRegister(
       description: description,
       category: category,
       value: value,
       dateRegister: date,
-      nameAccount: nameAccount,
+      idAccount: idAccount,
     );
     this.financialRegisterList.add(newFinancialRegister);
     return financialRegisterList.contains(newFinancialRegister);
@@ -122,8 +122,8 @@ class User {
       financialRegisterList[indexfr].description =
           editedFinancialRegister.description;
       financialRegisterList[indexfr].value = editedFinancialRegister.value;
-      financialRegisterList[indexfr].nameAccount =
-          editedFinancialRegister.nameAccount;
+      financialRegisterList[indexfr].idAccount =
+          editedFinancialRegister.idAccount;
       financialRegisterList[indexfr].dateRegister =
           editedFinancialRegister.dateRegister;
       financialRegisterList[indexfr].category =
@@ -143,23 +143,15 @@ class User {
     return false;
   }
 
-  double getTotalValue() {
-    double totalValue = 0;
-    financialRegisterList.forEach((element) {
-      totalValue += element.value;
-    });
-    return totalValue;
-  }
-
   List<FinancialRegister> getAllFinancialRegisters() {
     return [...financialRegisterList];
   }
 
   List<FinancialRegister> getAllFinancialRegisterByAccount(
-      {required String nameAccount}) {
+      {required String idAccount}) {
     List<FinancialRegister> financialRegisterListByAccount =
         financialRegisterList
-            .where((element) => element.nameAccount == nameAccount)
+            .where((element) => element.idAccount == idAccount)
             .toList();
     return financialRegisterListByAccount;
   }

@@ -28,6 +28,6 @@ void main() {
     category: 'CAR',
     date: DateTime.now(),
     value: 50,
-    nameAccount: 'conta1',
+    idAccount: 'conta1',
   );
 }
