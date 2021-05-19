@@ -1,6 +1,7 @@
 import 'package:ewallet/app/app_store.dart';
 import 'package:ewallet/app/modules/login/login_store.dart';
 import 'package:ewallet/app/modules/login/widgets/textfield_widget.dart';
+import 'package:ewallet/app/shared/models/user.dart';
 import 'package:ewallet/app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -49,7 +50,10 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
           Container(
             child: ElevatedButton(
               style: ButtonStyle(),
-              onPressed: () {},
+              onPressed: () {
+                User user = controller.generateUser();
+                Modular.to.pushReplacementNamed('/home', arguments: user);
+              },
               child: Text('Entrar'),
             ),
           ),

@@ -50,13 +50,14 @@ class User {
 
   bool updateAccount({required String idAccount, required Account account}) {
     if (checkAccountExists(idAccount: idAccount)) {
-      if(!(accountList.any((element) => element.nameAccount==account.nameAccount))){
-        int index =
-          accountList.indexWhere((element) => (element.idAccount == idAccount));
+      if (!(accountList
+          .any((element) => element.nameAccount == account.nameAccount))) {
+        int index = accountList
+            .indexWhere((element) => (element.idAccount == idAccount));
 
-      accountList[index].nameAccount = account.nameAccount;
-      accountList[index].color = account.color;
-      return true;
+        accountList[index].nameAccount = account.nameAccount;
+        accountList[index].color = account.color;
+        return true;
       }
     }
     return false;
@@ -79,7 +80,17 @@ class User {
     });
     return totalValue;
   }
-  
+
+  double getAccountTotalValue({required String idAccount}) {
+    double totalValue = 0;
+
+    financialRegisterList.forEach((element) {
+      totalValue += (element.idAccount == idAccount) ? element.value : 0;
+    });
+
+    return totalValue;
+  }
+
   //crud FinancialRegister
   bool checkFinancialRegisterExists({String? idFinancialRegister}) {
     return financialRegisterList
