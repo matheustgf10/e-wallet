@@ -166,4 +166,10 @@ class User {
             .toList();
     return financialRegisterListByAccount;
   }
+
+  String convertValueToRealPattern({required double value}) {
+    var var1 = value.toStringAsFixed(2);
+    var var2 = var1.split('.');
+    return "R\$ " + var2[0] + ',' + var2[1];
+  }
 }

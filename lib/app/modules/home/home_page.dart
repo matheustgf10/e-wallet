@@ -2,8 +2,11 @@ import 'package:ewallet/app/app_store.dart';
 import 'package:ewallet/app/modules/home/home_store.dart';
 import 'package:ewallet/app/modules/home/widgets/account_card.dart';
 import 'package:ewallet/app/modules/home/widgets/create_account_widget.dart';
+import 'package:ewallet/app/modules/home/widgets/financial_register_list_widget.dart';
+import 'package:ewallet/app/shared/models/account.dart';
 import 'package:ewallet/app/shared/models/user.dart';
 import 'package:ewallet/app/shared/widgets/custom_app_bar.dart';
+import 'package:ewallet/app/shared/widgets/drawer_menu.dart';
 import 'package:ewallet/app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -23,8 +26,6 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   AppStore _appStore = Modular.get<AppStore>();
   @override
   Widget build(BuildContext context) {
-    print('Account ID 1: ' + widget.user.accountList.first.idAccount);
-    print('Account ID 2: ' + widget.user.accountList.last.idAccount);
     _appStore.setSize(context: context);
     double height = _appStore.height;
     double width = _appStore.width;
@@ -34,12 +35,11 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
         title: CustomAppBar(userName: widget.user.name),
         backgroundColor: PRIMARY_COLOR,
       ),
-      drawer: Container(
-        child: Text('DRAWER MENU'),
-      ),
+      drawer: DrawerMenu(),
       body: Container(
         height: height,
         width: width,
+        padding: EdgeInsets.all(20),
         child: Column(
           children: [
             // Contas
@@ -54,15 +54,9 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                   mainAxisSpacing: 20,
                   mainAxisExtent: 80,
                 ),
-                padding: EdgeInsets.all(20),
                 itemCount: widget.user.accountList.length,
                 itemBuilder: (_, index) {
-                  return AccountCard(
-                    accountName: widget.user.accountList[index].nameAccount,
-                    accountValue: widget.user.getAccountTotalValue(
-                        idAccount: widget.user.accountList[index].idAccount),
-                    accountColor: widget.user.accountList[index].color,
-                  );
+                  return AccountCard(user: widget.user, index: index);
                 },
               ),
             ),
@@ -72,7 +66,8 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
               child: Container(
                 child: LayoutBuilder(builder: (_, constraints) {
                   return Container(
-                    height: constraints.maxHeight,
+                    height: constraints.maxHeight / 2,
+                    child: FinancialRegisterListWidget(user: widget.user),
                   );
                 }),
               ),
