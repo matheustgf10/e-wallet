@@ -1,9 +1,12 @@
+import 'package:ewallet/app/shared/models/account.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccountWidget extends StatefulWidget {
   late double height;
   late double width;
-  CreateAccountWidget({required this.height, required this.width});
+  late bool isEditing;
+  late Account? editedAccount;
+  CreateAccountWidget({required this.height, required this.width,required this.isEditing,this.editedAccount});
 
   @override
   _CreateAccountWidgetState createState() => _CreateAccountWidgetState();
@@ -23,6 +26,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
               Flexible(
                   child: TextFormField(
                 decoration: InputDecoration(labelText: 'Nome da Conta'),
+                initialValue: widget.isEditing ?widget.editedAccount!.nameAccount:'',
               )),
               SizedBox(
                 height: 40,
@@ -74,8 +78,10 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                 child: Container(
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
-                    child: Text("Criar Conta"),
-                    onPressed: () {},
+                    child: widget.isEditing?Text("Editar conta"):Text("Criar Conta"),
+                    onPressed: () {
+                      //criar e editar conta
+                    },
                   ),
                 ),
               )
