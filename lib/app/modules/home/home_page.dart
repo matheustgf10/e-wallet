@@ -76,13 +76,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-              context: context,
-              builder: (_) {
-                return CreateAccountWidget(height: height, width: width);
-              });
-        },
+        onPressed: () {},
         child: Icon(Icons.add),
       ),
     );

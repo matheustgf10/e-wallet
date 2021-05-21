@@ -3,7 +3,7 @@ import 'package:ewallet/app/shared/models/user.dart';
 import 'package:flutter/material.dart';
 
 class FinancialRegisterListWidget extends StatefulWidget {
-  User user;
+  final User user;
   FinancialRegisterListWidget({required this.user});
 
   @override
@@ -50,7 +50,7 @@ class _FinancialRegisterListWidgetState
                   trailing: Column(
                     children: [
                       widget.user.financialRegisterList[index].getIcon(),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Text(
                         widget.user.financialRegisterList[index].dateRegister
                                 .day
