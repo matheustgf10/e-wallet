@@ -50,7 +50,7 @@ class _FinancialRegisterListWidgetState
                   trailing: Column(
                     children: [
                       widget.user.financialRegisterList[index].getIcon(),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Text(
                         widget.user.financialRegisterList[index].dateRegister
                                 .day

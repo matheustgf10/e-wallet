@@ -1,5 +1,9 @@
 import 'package:ewallet/app/shared/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../../app_store.dart';
+import 'create_account_widget.dart';
 
 class AccountCard extends StatefulWidget {
   late User user;
@@ -12,13 +16,36 @@ class AccountCard extends StatefulWidget {
 }
 
 class _AccountCardState extends State<AccountCard> {
+  AppStore _appStore = Modular.get<AppStore>();
   @override
   Widget build(BuildContext context) {
+    _appStore.setSize(context: context);
+    double height = _appStore.height;
+    double width = _appStore.width;
     double value = widget.user.getAccountTotalValue(
         idAccount: widget.user.accountList[widget.index].idAccount);
     return InkWell(
-      onTap: () {},
-      onLongPress: () {},
+      //createAccount
+      onTap: () {
+        showModalBottomSheet(
+            context: context,
+            builder: (_) {
+              return CreateAccountWidget(
+                  isEditing: false, height: height, width: width);
+            });
+      },
+      //Edit account
+      onLongPress: () {
+        showModalBottomSheet(
+            context: context,
+            builder: (_) {
+              return CreateAccountWidget(
+                  isEditing: true,
+                  editedAccount: widget.user.accountList[widget.index],
+                  height: height,
+                  width: width);
+            });
+      },
       child: Container(
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),
