@@ -44,6 +44,13 @@ class User {
     return null;
   }
 
+  String getIdAccountByName({String? name}) {
+    var account =
+        accountList.firstWhere((element) => (element.nameAccount == name));
+
+    return account.idAccount;
+  }
+
   List<Account> getAllAccount() {
     return [...accountList];
   }
