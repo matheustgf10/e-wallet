@@ -2,6 +2,7 @@ import 'package:ewallet/app/app_store.dart';
 import 'package:ewallet/app/modules/home/home_store.dart';
 import 'package:ewallet/app/modules/home/widgets/account_card.dart';
 import 'package:ewallet/app/modules/home/widgets/create_account_widget.dart';
+import 'package:ewallet/app/modules/home/widgets/create_financial_register_widget.dart';
 import 'package:ewallet/app/modules/home/widgets/financial_register_list_widget.dart';
 import 'package:ewallet/app/shared/models/account.dart';
 import 'package:ewallet/app/shared/models/user.dart';
@@ -26,6 +27,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   AppStore _appStore = Modular.get<AppStore>();
   @override
   Widget build(BuildContext context) {
+    int qntFinancialRegister = _appStore.user!.financialRegisterList.length;
     _appStore.setSize(context: context);
     double height = _appStore.height;
     double width = _appStore.width;
@@ -67,7 +69,16 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                 child: LayoutBuilder(builder: (_, constraints) {
                   return Container(
                     height: constraints.maxHeight / 2,
-                    child: FinancialRegisterListWidget(user: widget.user),
+                    child: Observer(builder: (_) {
+                      return (_appStore.hasUpdatedFinancialRegister)
+                          ? (_appStore.haveNewFinancialRegister)
+                              ? FinancialRegisterListWidget(
+                                  user: _appStore.user!, hasModified: false)
+                              : FinancialRegisterListWidget(
+                                  user: _appStore.user!, hasModified: true)
+                          : FinancialRegisterListWidget(
+                              user: _appStore.user!, hasModified: false);
+                    }),
                   );
                 }),
               ),
@@ -76,7 +87,19 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        backgroundColor: PRIMARY_COLOR,
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (_) {
+                return CreateFinancialRegisterWidget(
+                  height: height,
+                  width: width,
+                  user: _appStore.user!,
+                  isUpdateFinancialRegister: false,
+                );
+              });
+        },
         child: Icon(Icons.add),
       ),
     );
