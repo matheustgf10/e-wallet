@@ -48,13 +48,23 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
             ),
           ),
           Container(
-            child: ElevatedButton(
-              style: ButtonStyle(),
-              onPressed: () {
-                User user = controller.generateUser();
-                Modular.to.pushReplacementNamed('/home', arguments: user);
-              },
-              child: Text('Entrar'),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.only(
+                        left: 40, right: 40, top: 20, bottom: 20)),
+                onPressed: () {
+                  _appStore.user = controller.generateUser();
+
+                  Modular.to
+                      .pushReplacementNamed('/home', arguments: _appStore.user);
+                },
+                child: Text(
+                  'Entrar',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
             ),
           ),
           Container(
