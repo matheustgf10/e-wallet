@@ -10,6 +10,18 @@ A new Flutter project.
 
 :white_check_mark: [Class Diagram](https://github.com/matheustgf10/e-wallet/blob/main/documentation/Class_diagram.png)
 
+## Technologies
+- Flutter
+- Firebase
+- Flutter Modular
+- Slidy
+
+## Packages
+
+- Mobx
+- Uuid
+- Lottie
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
