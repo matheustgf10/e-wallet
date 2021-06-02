@@ -24,8 +24,9 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 ## Credits
+Developer with ♥️ by
 
-Developer - Lázaro Barros
+Flutter Developer Jr - [Lázaro Barros](https://www.linkedin.com/in/lazaro-barros-severo/)
 
-Developer - Matheus Figueirêdo
+Flutter Developer Jr - [Matheus Figueirêdo](https://www.linkedin.com/in/matheus-figueirêdo-2b1611150/)
 
