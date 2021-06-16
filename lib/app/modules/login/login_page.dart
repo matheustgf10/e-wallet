@@ -18,66 +18,66 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
   Widget build(BuildContext context) {
     _appStore.setSize(context: context);
     return Scaffold(
+        backgroundColor: BACKGROUND_COLOR,
         body: Container(
-      height: _appStore.height,
-      width: _appStore.width,
-      child: Column(
-        children: [
-          SizedBox(
-            height: _appStore.height * 0.15,
-          ),
-          Container(child: Image.asset('lib/app/shared/assets/img/logo.png')),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Container(
-                child: Text(
-              'Conecte-se para continuar',
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 22),
-            )),
-          ),
-          Container(
-            child: TextFieldWidget(
-              label: 'E-mail: ',
-              icon: Icon(Icons.person_sharp),
-            ),
-          ),
-          Container(
-            child: TextFieldWidget(
-              label: 'Senha: ',
-              icon: Icon(Icons.remove_red_eye_outlined),
-            ),
-          ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.only(
-                        left: 40, right: 40, top: 20, bottom: 20)),
-                onPressed: () {
-                  _appStore.user = controller.generateUser();
-
-                  Modular.to
-                      .pushReplacementNamed('/home', arguments: _appStore.user);
-                },
-                child: Text(
-                  'Entrar',
-                  style: TextStyle(fontSize: 20),
+          height: _appStore.height,
+          width: _appStore.width,
+          child: Column(
+            children: [
+              SizedBox(
+                height: _appStore.height * 0.15,
+              ),
+              Container(
+                  child: Image.asset('lib/app/shared/assets/img/logo.png')),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Container(
+                    child: Text(
+                  'Conecte-se para continuar',
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 22),
+                )),
+              ),
+              Container(
+                child: TextFieldWidget(
+                  label: 'E-mail: ',
+                  icon: Icon(Icons.person_sharp),
                 ),
               ),
-            ),
+              Container(
+                child: TextFieldWidget(
+                  label: 'Senha: ',
+                  icon: Icon(Icons.remove_red_eye_outlined),
+                ),
+              ),
+              Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.only(
+                            left: 40, right: 40, top: 20, bottom: 20)),
+                    onPressed: () {
+                      Modular.to.pushReplacementNamed('/home',
+                          arguments: _appStore.user);
+                    },
+                    child: Text(
+                      'Entrar',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                child: Text(
+                  'Esqueceu a senha?',
+                  style: TextStyle(fontSize: 16, color: SECONDARY_COLOR),
+                ),
+              ),
+              SizedBox(
+                height: _appStore.height * 0.05,
+              ),
+            ],
           ),
-          Container(
-            child: Text(
-              'Esqueceu a senha?',
-              style: TextStyle(fontSize: 16, color: SECONDARY_COLOR),
-            ),
-          ),
-          SizedBox(
-            height: _appStore.height * 0.05,
-          ),
-        ],
-      ),
-    ));
+        ));
   }
 }
