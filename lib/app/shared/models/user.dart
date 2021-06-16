@@ -2,32 +2,50 @@ import 'dart:ui';
 
 import 'package:ewallet/app/shared/models/account.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:uuid/uuid.dart';
 import 'financial_register.dart';
 
-class User {
-  late String idUser = 'USER' + Uuid().v4();
-  late String name;
-  late String login;
-  late String password;
-  late List<Account> accountList;
-  late List<FinancialRegister> financialRegisterList = [];
+part 'user.g.dart';
 
-  User({
+class User = UserBase with _$User;
+
+abstract class UserBase with Store {
+  @observable
+  String idUser = 'USER' + Uuid().v4();
+
+  @observable
+  late String name;
+
+  @observable
+  late String login;
+
+  @observable
+  late String password;
+
+  @observable
+  ObservableList<Account> accountList = ObservableList();
+
+  @observable
+  late ObservableList<FinancialRegister> financialRegisterList =
+      ObservableList();
+
+  UserBase({
     required this.name,
     required this.login,
     required this.password,
-    required this.accountList,
   });
 
   //crud Account
+  @action
   bool checkAccountExists({String? idAccount}) {
     return accountList.any((element) => element.idAccount == idAccount);
   }
 
-  bool createAccount({String? nameAccount, Color? color}) {
+  @action
+  bool createAccount({required String nameAccount, Color? color}) {
     Account account = Account(
-      nameAccount: nameAccount ?? '',
+      nameAccount: nameAccount,
       color: color ?? Colors.red,
       flagAccount: true,
     );
@@ -35,7 +53,8 @@ class User {
     return accountList.contains(account);
   }
 
-  dynamic getAccount({String? idAccount}) {
+  @action
+  dynamic getAccount({required String idAccount}) {
     if (this.checkAccountExists(idAccount: idAccount)) {
       return accountList
           .firstWhere((element) => (element.idAccount == idAccount));
@@ -44,17 +63,20 @@ class User {
     return null;
   }
 
-  String getIdAccountByName({String? name}) {
+  @action
+  String getIdAccountByName({required String name}) {
     var account =
         accountList.firstWhere((element) => (element.nameAccount == name));
 
     return account.idAccount;
   }
 
+  @action
   List<Account> getAllAccount() {
     return [...accountList];
   }
 
+  @action
   bool updateAccount({required String idAccount, required Account account}) {
     if (checkAccountExists(idAccount: idAccount)) {
       if (!(accountList
@@ -70,7 +92,8 @@ class User {
     return false;
   }
 
-  bool deleteAccount({String? idAccount}) {
+  @action
+  bool deleteAccount({required String idAccount}) {
     dynamic isRemoved = false;
     if (checkAccountExists(idAccount: idAccount)) {
       accountList.removeWhere(isRemoved =
@@ -80,6 +103,7 @@ class User {
     return isRemoved;
   }
 
+  @action
   double getTotalValue() {
     double totalValue = 0;
     financialRegisterList.forEach((element) {
@@ -88,6 +112,7 @@ class User {
     return totalValue;
   }
 
+  @action
   double getAccountTotalValue({required String idAccount}) {
     double totalValue = 0;
 
@@ -99,11 +124,13 @@ class User {
   }
 
   //crud FinancialRegister
-  bool checkFinancialRegisterExists({String? idFinancialRegister}) {
+  @action
+  bool checkFinancialRegisterExists({required String idFinancialRegister}) {
     return financialRegisterList
         .any((element) => element.idFinancialRegister == idFinancialRegister);
   }
 
+  @action
   bool createFinancialRegister(
       {required String description,
       required double value,
@@ -117,11 +144,13 @@ class User {
       dateRegister: date,
       idAccount: idAccount,
     );
-    this.financialRegisterList.add(newFinancialRegister);
+    this.financialRegisterList.insert(0, newFinancialRegister);
+
     return financialRegisterList.contains(newFinancialRegister);
   }
 
-  dynamic getFinancialRegister({String? idFinancialRegister}) {
+  @action
+  dynamic getFinancialRegister({required String idFinancialRegister}) {
     if (checkFinancialRegisterExists(
         idFinancialRegister: idFinancialRegister)) {
       return financialRegisterList.singleWhere(
@@ -130,6 +159,7 @@ class User {
     return null;
   }
 
+  @action
   bool updateFinancialRegister(
       {required String idFinancialRegister,
       required FinancialRegister editedFinancialRegister}) {
@@ -151,7 +181,8 @@ class User {
     return false;
   }
 
-  bool deleteFinancialRegister({String? idFinancialRegister}) {
+  @action
+  bool deleteFinancialRegister({required String idFinancialRegister}) {
     if (checkFinancialRegisterExists(
         idFinancialRegister: idFinancialRegister)) {
       financialRegisterList.removeWhere(
@@ -161,10 +192,12 @@ class User {
     return false;
   }
 
+  @action
   List<FinancialRegister> getAllFinancialRegisters() {
     return [...financialRegisterList];
   }
 
+  @action
   List<FinancialRegister> getAllFinancialRegisterByAccount(
       {required String idAccount}) {
     List<FinancialRegister> financialRegisterListByAccount =
@@ -174,6 +207,7 @@ class User {
     return financialRegisterListByAccount;
   }
 
+  @action
   String convertValueToRealPattern({required double value}) {
     var var1 = value.toStringAsFixed(2);
     var var2 = var1.split('.');

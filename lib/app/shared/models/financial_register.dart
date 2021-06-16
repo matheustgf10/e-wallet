@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:uuid/uuid.dart';
 
-class FinancialRegister {
-  String idFinancialRegister = 'FINANCIALREGISTER' + Uuid().v4();
-  String description;
-  double value;
-  String category;
-  DateTime dateRegister;
-  String idAccount;
+part 'financial_register.g.dart';
 
-  FinancialRegister({
+class FinancialRegister = FinancialRegisterBase with _$FinancialRegister;
+
+abstract class FinancialRegisterBase with Store {
+  @observable
+  String idFinancialRegister = 'FINANCIALREGISTER' + Uuid().v4();
+
+  @observable
+  late String description;
+
+  @observable
+  late double value;
+
+  @observable
+  late String category;
+
+  @observable
+  late DateTime dateRegister;
+
+  @observable
+  late String idAccount;
+
+  FinancialRegisterBase({
     required this.description,
     required this.value,
     required this.category,

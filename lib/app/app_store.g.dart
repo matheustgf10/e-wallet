@@ -12,13 +12,13 @@ mixin _$AppStore on AppStoreBase, Store {
   final _$userAtom = Atom(name: 'AppStoreBase.user');
 
   @override
-  User? get user {
+  User get user {
     _$userAtom.reportRead();
     return super.user;
   }
 
   @override
-  set user(User? value) {
+  set user(User value) {
     _$userAtom.reportWrite(value, super.user, () {
       super.user = value;
     });
@@ -61,22 +61,26 @@ mixin _$AppStore on AppStoreBase, Store {
   final _$AppStoreBaseActionController = ActionController(name: 'AppStoreBase');
 
   @override
-  bool addFinancialRegister(FinancialRegister financialRegister) {
+  bool addFinancialRegister({required FinancialRegister financialRegister}) {
     final _$actionInfo = _$AppStoreBaseActionController.startAction(
         name: 'AppStoreBase.addFinancialRegister');
     try {
-      return super.addFinancialRegister(financialRegister);
+      return super.addFinancialRegister(financialRegister: financialRegister);
     } finally {
       _$AppStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setSize({required BuildContext context}) {
+  bool updateFinancialRegister(
+      {required FinancialRegister editedFinancialRegister,
+      required String idFinancialRegister}) {
     final _$actionInfo = _$AppStoreBaseActionController.startAction(
-        name: 'AppStoreBase.setSize');
+        name: 'AppStoreBase.updateFinancialRegister');
     try {
-      return super.setSize(context: context);
+      return super.updateFinancialRegister(
+          editedFinancialRegister: editedFinancialRegister,
+          idFinancialRegister: idFinancialRegister);
     } finally {
       _$AppStoreBaseActionController.endAction(_$actionInfo);
     }

@@ -12,7 +12,7 @@ abstract class AppStoreBase with Store {
   late double width;
 
   @observable
-  User? user;
+  late User user = generateUser();
 
   @observable
   bool haveNewFinancialRegister = false;
@@ -20,15 +20,45 @@ abstract class AppStoreBase with Store {
   @observable
   bool hasUpdatedFinancialRegister = false;
 
-  @action
-  bool addFinancialRegister(FinancialRegister financialRegister) {
-    user!.financialRegisterList.add(financialRegister);
-    return true;
-  }
-
-  @action
   void setSize({required BuildContext context}) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
+  }
+
+  @action
+  bool addFinancialRegister({required FinancialRegister financialRegister}) {
+    haveNewFinancialRegister = user.createFinancialRegister(
+        description: financialRegister.description,
+        value: financialRegister.value,
+        category: financialRegister.category,
+        date: financialRegister.dateRegister,
+        idAccount: financialRegister.idAccount);
+
+    return haveNewFinancialRegister;
+  }
+
+  @action
+  bool updateFinancialRegister(
+      {required FinancialRegister editedFinancialRegister,
+      required String idFinancialRegister}) {
+    hasUpdatedFinancialRegister = user.updateFinancialRegister(
+        idFinancialRegister: idFinancialRegister,
+        editedFinancialRegister: editedFinancialRegister);
+    return hasUpdatedFinancialRegister;
+  }
+
+  User generateUser() {
+    User user = User(
+      login: 'matheustgf64',
+      name: 'Matheus Figueirêdo',
+      password: '123',
+    );
+
+    user.createAccount(
+      nameAccount: 'Carteira',
+      color: Colors.orange[100]?.withOpacity(0.9),
+    );
+
+    return user;
   }
 }
