@@ -12,34 +12,38 @@ class CustomAppBar extends StatefulWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Flex(
-        direction: Axis.horizontal,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 5),
-                child: Container(
-                  child: Text(widget.userName),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Container(
-                    child: Icon(Icons.person),
-                    color: Colors.grey[300],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+    return LayoutBuilder(builder: (_, constraints) {
+      return Container(
+        width: constraints.maxWidth / 2,
+        child: Flex(
+          direction: Axis.horizontal,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Row(
+            //   children: [
+            //     Padding(
+            //       padding: EdgeInsets.only(left: 5),
+            //       child: Container(
+            //         child: Text(widget.userName),
+            //       ),
+            //     ),
+            //     Padding(
+            //       padding: const EdgeInsets.only(left: 8.0),
+            //       child: ClipRRect(
+            //         borderRadius: BorderRadius.circular(50),
+            //         child: Container(
+            //           child: Icon(Icons.person),
+            //           color: Colors.grey[300],
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            Container(child: Text('E-wallet'))
+          ],
+        ),
+      );
+    });
   }
 }
