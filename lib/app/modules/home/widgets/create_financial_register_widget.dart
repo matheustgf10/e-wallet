@@ -46,7 +46,12 @@ class _CreateFinancialRegisterWidgetState
             Flexible(
                 child: Container(
               alignment: Alignment.centerLeft,
-              child: DropdownWidget(accountList: widget.user.accountList),
+              child: Row(
+                children: [
+                  Text('Selecione uma conta '),
+                  DropdownWidget(accountList: widget.user.accountList),
+                ],
+              ),
             )),
             SizedBox(
               height: 40,
@@ -55,7 +60,8 @@ class _CreateFinancialRegisterWidgetState
               child: Container(
                 child: TextFormField(
                   controller: _valueTextfield,
-                  decoration: InputDecoration(labelText: 'Valor'),
+                  decoration:
+                      InputDecoration(labelText: 'Valor', prefix: Text('R\$ ')),
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -82,29 +88,13 @@ class _CreateFinancialRegisterWidgetState
     );
   }
 
-  // void updateFinancialRegister() {
-  //   FinancialRegister newFinancialRegister = FinancialRegister(
-  //     description: _descriptionTextfield.value.text,
-  //     value: double.parse(_valueTextfield.value.text),
-  //     category: 'COMIDA',
-  //     dateRegister: DateTime.now(),
-  //     idAccount:
-  //         widget._appStore.user!.financialRegisterList[widget.index!].idAccount,
-  //   );
-
-  //   widget._appStore.updateFinancialRegister(
-  //       idFinancialRegister: widget._appStore.user!
-  //           .financialRegisterList[widget.index!].idFinancialRegister,
-  //       editedFinancialRegister: newFinancialRegister);
-  // }
-
   void createFinancialRegister() {
     FinancialRegister _newFinancialRegister = FinancialRegister(
       description: _descriptionTextfield.value.text,
       value: double.parse(_valueTextfield.value.text),
       category: 'COMIDA',
       dateRegister: DateTime.now(),
-      idAccount: widget._appStore.user!.getIdAccountByName(
+      idAccount: widget._appStore.user.getIdAccountByName(
           name: controller.dropdownNewFinancialRegisterValue),
     );
     widget._appStore
