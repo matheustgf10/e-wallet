@@ -13,12 +13,11 @@ class HomeModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute(Modular.initialRoute, child: (_, args) {
-      User user = args.data;
-      return HomePage(user: user);
-    }),
-    ChildRoute('FinancialRegister/update', child: (_, args) {
-      return UpdateFinancialRegisterPage(financialRegister: args.data);
-    }),
+    ChildRoute(Modular.initialRoute, child: (_, args) => HomePage()),
+    ChildRoute(
+      'FinancialRegister/update',
+      child: (_, args) =>
+          UpdateFinancialRegisterPage(financialRegister: args.data),
+    ),
   ];
 }
