@@ -10,6 +10,18 @@ A new Flutter project.
 
 :white_check_mark: [Class Diagram](https://github.com/matheustgf10/e-wallet/blob/main/documentation/Class_diagram.png)
 
+## Technologies
+- Flutter
+- Firebase
+- Flutter Modular
+- Slidy
+
+## Packages
+
+- Mobx
+- Uuid
+- Lottie
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
@@ -24,8 +36,9 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 ## Credits
+Developed with ♥️ by
 
-Developer - Lázaro Barros
+Flutter Developer Jr - [Lázaro Barros](https://www.linkedin.com/in/lazaro-barros-severo/)
 
-Developer - Matheus Figueirêdo
+Flutter Developer Jr - [Matheus Figueirêdo](https://www.linkedin.com/in/matheus-figueirêdo-2b1611150/)
 
