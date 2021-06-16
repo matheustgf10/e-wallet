@@ -37,6 +37,7 @@ flutter:
   uses-material-design: true
   assets:
     - lib/app/shared/assets/img/logo.png
+    - lib/app/shared/assets/img/arrow_right.png
   # fonts:
   #   - family: Schyler
   #     fonts:
