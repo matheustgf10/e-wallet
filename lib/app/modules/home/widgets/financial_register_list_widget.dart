@@ -1,12 +1,14 @@
+import 'package:ewallet/app/app_store.dart';
 import 'package:ewallet/app/modules/home/pages/update_financial_register_page.dart';
+import 'package:ewallet/app/modules/home/widgets/financial_register_card_custom.dart';
 import 'package:ewallet/app/shared/models/account.dart';
-import 'package:ewallet/app/shared/models/user.dart';
+import 'package:ewallet/app/shared/models/financial_register.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class FinancialRegisterListWidget extends StatefulWidget {
-  final User user;
-  FinancialRegisterListWidget({required this.user});
+  FinancialRegisterListWidget();
 
   @override
   _FinancialRegisterListWidgetState createState() =>
@@ -15,71 +17,28 @@ class FinancialRegisterListWidget extends StatefulWidget {
 
 class _FinancialRegisterListWidgetState
     extends State<FinancialRegisterListWidget> {
+  AppStore _appStore = Modular.get<AppStore>();
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: widget.user.financialRegisterList.length,
-        reverse: true,
-        itemBuilder: (_, index) {
-          Account account = widget.user.getAccount(
-              idAccount: widget.user.financialRegisterList[index].idAccount);
-
-          return InkWell(
-            onLongPress: () {
-              Modular.to.pushNamed('FinancialRegister/update',
-                  arguments: widget.user.financialRegisterList[index]);
-            },
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Container(
-                  child: ListTile(
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget
-                            .user.financialRegisterList[index].description),
-                        Text(
-                          account.nameAccount,
-                          style: TextStyle(fontSize: 14, color: Colors.black54),
-                        ),
-                      ],
-                    ),
-                    subtitle: Text(
-                      widget.user.convertValueToRealPattern(
-                          value:
-                              widget.user.financialRegisterList[index].value),
-                      style: TextStyle(
-                          color: (widget.user.financialRegisterList[index].value
-                                  .isNegative)
-                              ? Colors.red
-                              : Colors.green),
-                    ),
-                    trailing: Column(
-                      children: [
-                        widget.user.financialRegisterList[index].getIcon(),
-                        SizedBox(height: 5),
-                        Text(
-                          widget.user.financialRegisterList[index].dateRegister
-                                  .day
-                                  .toString() +
-                              '/' +
-                              widget.user.financialRegisterList[index]
-                                  .dateRegister.month
-                                  .toString() +
-                              '/' +
-                              widget.user.financialRegisterList[index]
-                                  .dateRegister.year
-                                  .toString(),
-                          style: TextStyle(color: Colors.black54),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-        });
+    return Observer(builder: (_) {
+      return Container(
+        child: ListView.builder(
+            itemCount: _appStore.user.financialRegisterList.length,
+            reverse: false,
+            itemBuilder: (_, index) {
+              Account account = _appStore.user.getAccount(
+                  idAccount:
+                      _appStore.user.financialRegisterList[index].idAccount);
+              return InkWell(
+                onLongPress: () {
+                  Modular.to.pushNamed('FinancialRegister/update',
+                      arguments: _appStore.user.financialRegisterList[index]);
+                },
+                child:
+                    FinancialRegisterCardCustom(account: account, index: index),
+              );
+            }),
+      );
+    });
   }
 }
