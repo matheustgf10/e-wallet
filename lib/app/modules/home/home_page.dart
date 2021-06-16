@@ -1,11 +1,8 @@
 import 'package:ewallet/app/app_store.dart';
 import 'package:ewallet/app/modules/home/home_store.dart';
 import 'package:ewallet/app/modules/home/widgets/account_card.dart';
-import 'package:ewallet/app/modules/home/widgets/create_account_widget.dart';
 import 'package:ewallet/app/modules/home/widgets/create_financial_register_widget.dart';
 import 'package:ewallet/app/modules/home/widgets/financial_register_list_widget.dart';
-import 'package:ewallet/app/shared/models/account.dart';
-import 'package:ewallet/app/shared/models/user.dart';
 import 'package:ewallet/app/shared/widgets/custom_app_bar.dart';
 import 'package:ewallet/app/shared/widgets/drawer_menu.dart';
 import 'package:ewallet/app/utils/colors.dart';
@@ -15,9 +12,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
-  late User user;
-  HomePage({Key? key, this.title = "Home", required this.user})
-      : super(key: key);
+
+  HomePage({Key? key, this.title = "Home"}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -27,14 +23,14 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
   AppStore _appStore = Modular.get<AppStore>();
   @override
   Widget build(BuildContext context) {
-    int qntFinancialRegister = _appStore.user!.financialRegisterList.length;
     _appStore.setSize(context: context);
     double height = _appStore.height;
     double width = _appStore.width;
 
     return Scaffold(
+      backgroundColor: BACKGROUND_COLOR,
       appBar: AppBar(
-        title: CustomAppBar(userName: widget.user.name),
+        title: CustomAppBar(userName: _appStore.user.name),
         backgroundColor: PRIMARY_COLOR,
       ),
       drawer: DrawerMenu(),
@@ -47,7 +43,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
             // Contas
             Container(
               width: width,
-              height: height * 0.35,
+              height: height * 0.20,
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -56,9 +52,22 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                   mainAxisSpacing: 20,
                   mainAxisExtent: 80,
                 ),
-                itemCount: widget.user.accountList.length,
+                itemCount: _appStore.user.accountList.length,
                 itemBuilder: (_, index) {
-                  return AccountCard(user: widget.user, index: index);
+                  return (index == _appStore.user.accountList.length - 1)
+                      ? Row(
+                          children: [
+                            AccountCard(user: _appStore.user, index: index),
+                            Spacer(),
+                            Container(
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                child: Text('+'),
+                              ),
+                            )
+                          ],
+                        )
+                      : AccountCard(user: _appStore.user, index: index);
                 },
               ),
             ),
@@ -70,14 +79,13 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                   return Container(
                     height: constraints.maxHeight / 2,
                     child: Observer(builder: (_) {
-                      return (_appStore.hasUpdatedFinancialRegister)
-                          ? (_appStore.haveNewFinancialRegister)
-                              ? FinancialRegisterListWidget(
-                                  user: _appStore.user!, hasModified: false)
-                              : FinancialRegisterListWidget(
-                                  user: _appStore.user!, hasModified: true)
-                          : FinancialRegisterListWidget(
-                              user: _appStore.user!, hasModified: false);
+                      return (_appStore.user.financialRegisterList.length > 0)
+                          ? FinancialRegisterListWidget()
+                          : Container(
+                              child: Center(
+                                child: Text('Nenhum registro por enquanto'),
+                              ),
+                            );
                     }),
                   );
                 }),
@@ -92,12 +100,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
           showModalBottomSheet(
               context: context,
               builder: (_) {
-                return CreateFinancialRegisterWidget(
-                  height: height,
-                  width: width,
-                  user: _appStore.user!,
-                  isUpdateFinancialRegister: false,
-                );
+                return CreateFinancialRegisterWidget(user: _appStore.user);
               });
         },
         child: Icon(Icons.add),

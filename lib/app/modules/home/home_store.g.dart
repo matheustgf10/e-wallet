@@ -26,10 +26,26 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
+  final _$dropdownWasTappadAtom = Atom(name: 'HomeStoreBase.dropdownWasTappad');
+
+  @override
+  bool get dropdownWasTappad {
+    _$dropdownWasTappadAtom.reportRead();
+    return super.dropdownWasTappad;
+  }
+
+  @override
+  set dropdownWasTappad(bool value) {
+    _$dropdownWasTappadAtom.reportWrite(value, super.dropdownWasTappad, () {
+      super.dropdownWasTappad = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
-dropdownNewFinancialRegisterValue: ${dropdownNewFinancialRegisterValue}
+dropdownNewFinancialRegisterValue: ${dropdownNewFinancialRegisterValue},
+dropdownWasTappad: ${dropdownWasTappad}
     ''';
   }
 }
