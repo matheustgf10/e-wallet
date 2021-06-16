@@ -1,9 +1,12 @@
 import 'package:ewallet/app/app_store.dart';
+import 'package:ewallet/app/modules/home/home_store.dart';
+import 'package:ewallet/app/modules/home/widgets/dropdown_widget.dart';
+import 'package:ewallet/app/shared/models/account.dart';
 import 'package:ewallet/app/shared/models/financial_register.dart';
-import 'package:ewallet/app/shared/models/user.dart';
 import 'package:ewallet/app/shared/widgets/custom_app_bar.dart';
 import 'package:ewallet/app/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class UpdateFinancialRegisterPage extends StatefulWidget {
@@ -12,14 +15,19 @@ class UpdateFinancialRegisterPage extends StatefulWidget {
   UpdateFinancialRegisterPage({required this.financialRegister});
   @override
   _UpdateFinancialRegisterPageState createState() =>
-      _UpdateFinancialRegisterPageState();
+      _UpdateFinancialRegisterPageState(financialRegister.idAccount);
 }
 
 class _UpdateFinancialRegisterPageState
-    extends State<UpdateFinancialRegisterPage> {
+    extends ModularState<UpdateFinancialRegisterPage, HomeStore> {
   AppStore _appStore = Modular.get<AppStore>();
   TextEditingController _descriptionTextfield = TextEditingController();
   TextEditingController _valueTextfield = TextEditingController();
+  late Account account;
+
+  _UpdateFinancialRegisterPageState(String idAccount) {
+    account = _appStore.user.getAccount(idAccount: idAccount);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +35,16 @@ class _UpdateFinancialRegisterPageState
     _valueTextfield.text = widget.financialRegister.value.toString();
 
     return Scaffold(
+      backgroundColor: BACKGROUND_COLOR,
       appBar: AppBar(
-        title: CustomAppBar(userName: _appStore.user!.name),
+        title: CustomAppBar(userName: _appStore.user.name),
         backgroundColor: PRIMARY_COLOR,
       ),
       body: Container(
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             return Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(20),
               child: Container(
                 width: constraints.maxWidth,
                 child: Column(
@@ -49,9 +58,9 @@ class _UpdateFinancialRegisterPageState
                           height: constraints.maxHeight * 0.1,
                           child: Center(
                             child: Text(
-                              'Carteira',
+                              account.nameAccount,
                               style: TextStyle(
-                                fontSize: 24,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
@@ -61,15 +70,43 @@ class _UpdateFinancialRegisterPageState
                       ),
                     ),
                     Container(
-                        child:
-                            TextFormField(controller: _descriptionTextfield)),
+                        child: TextFormField(
+                            decoration: InputDecoration(
+                                labelText: 'Descrição',
+                                labelStyle: TextStyle(color: PRIMARY_COLOR)),
+                            controller: _descriptionTextfield)),
                     SizedBox(height: 20),
                     Container(
-                        child: TextFormField(controller: _valueTextfield)),
+                      child: Row(
+                        children: [
+                          Text('Conta '),
+                          SizedBox(width: 42),
+                          Observer(builder: (_) {
+                            return DropdownWidget(
+                              accountList: _appStore.user.accountList,
+                            );
+                          }),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                        child: TextFormField(
+                            decoration: InputDecoration(
+                                labelText: 'Valor',
+                                labelStyle: TextStyle(color: PRIMARY_COLOR),
+                                prefixText: 'R\$ ',
+                                prefixStyle: TextStyle(color: PRIMARY_COLOR)),
+                            controller: _valueTextfield)),
                     SizedBox(height: 20),
                     Container(
                       child: ElevatedButton(
-                          onPressed: () {}, child: Text('Atualizar Registro')),
+                          onPressed: () {
+                            if (updateFinancialRegister()) {
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Text('Atualizar Registro')),
                     ),
                   ],
                 ),
@@ -79,5 +116,20 @@ class _UpdateFinancialRegisterPageState
         ),
       ),
     );
+  }
+
+  bool updateFinancialRegister() {
+    FinancialRegister newFinancialRegister = FinancialRegister(
+      description: _descriptionTextfield.value.text,
+      value: double.parse(_valueTextfield.value.text),
+      category: 'COMIDA',
+      dateRegister: DateTime.now(),
+      idAccount: _appStore.user.getIdAccountByName(
+          name: controller.dropdownNewFinancialRegisterValue),
+    );
+
+    return _appStore.updateFinancialRegister(
+        idFinancialRegister: widget.financialRegister.idFinancialRegister,
+        editedFinancialRegister: newFinancialRegister);
   }
 }
