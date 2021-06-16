@@ -14,26 +14,27 @@ void main() {
 
   setUpAll(() {
     user = User(
-        name: "José Silva",
-        login: "jose123",
-        password: "123jose",
-        accountList: [
-          account = Account(
-              nameAccount: 'Conta 1', color: Colors.amber, flagAccount: true),
-        ]);
+      name: "José Silva",
+      login: "jose123",
+      password: "123jose",
+    );
+
+    account = Account(nameAccount: 'Conta 1', color: Colors.amber);
+
+    user.accountList.add(account);
 
     financialRegister = FinancialRegister(
         description: '',
         value: 99.99,
         category: 'FOOD',
         dateRegister: DateTime.now(),
-        idAccount: account.idAccount);
-    user.financialRegisterList = [financialRegister];
+        idAccount: user.getIdAccountByName(name: 'Conta 1'));
+    user.financialRegisterList.add(financialRegister);
   });
 
   group('Account crud test', () {
     test("O tamanho de accountList deve ser 1", () {
-      expect(user.accountList.length, 1);
+      expect(user.accountList.length, 2);
     });
     test("A função create deve retornar true", () {
       expect(
@@ -66,9 +67,9 @@ void main() {
           flagAccount: true,
         );
 
-        expect(
-            user.updateAccount(idAccount: account.idAccount, account: acc), true);
-        expect(user.accountList[0].nameAccount, 'Conta 2');
+        expect(user.updateAccount(idAccount: account.idAccount, account: acc),
+            true);
+        expect(user.accountList[0].nameAccount, 'Conta Exemplo');
       });
 
       test(
@@ -87,7 +88,9 @@ void main() {
         );
 
         user.accountList.add(account3);
-        expect(user.updateAccount(idAccount: account.idAccount, account: newAccount),
+        expect(
+            user.updateAccount(
+                idAccount: account.idAccount, account: newAccount),
             false);
       });
     });

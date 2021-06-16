@@ -18,10 +18,9 @@ void main() {
     name: 'Usuario 1',
     login: '1234',
     password: 'qwer',
-    accountList: [
-      account1,
-    ],
   );
+
+  user.createAccount(nameAccount: 'conta1', color: Colors.blue);
 
   user.createFinancialRegister(
     description: 'tire',
