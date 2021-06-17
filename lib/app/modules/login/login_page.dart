@@ -42,18 +42,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  child: Text(
-                    'Conecte-se para continuar',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 22,
-                    ),
-                  ),
-                ),
-              ),
               Container(
                 child: TextFieldWidget(
                   label: 'E-mail: ',
@@ -79,7 +67,10 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                     },
                     child: Text(
                       'Entrar',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Roboto',
+                      ),
                     ),
                   ),
                 ),
@@ -87,7 +78,10 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
               Container(
                 child: Text(
                   'Esqueceu a senha?',
-                  style: TextStyle(fontSize: 16, color: SECONDARY_COLOR),
+                  style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontSize: 16,
+                      color: SECONDARY_COLOR),
                 ),
               ),
               SizedBox(

@@ -1,6 +1,6 @@
 import 'package:ewallet/app/app_store.dart';
 import 'package:ewallet/app/modules/home/home_store.dart';
-import 'package:ewallet/app/modules/home/widgets/dropdown_widget.dart';
+import 'package:ewallet/app/modules/home/widgets/financial_register_widgets/dropdown_widget.dart';
 import 'package:ewallet/app/shared/models/account.dart';
 import 'package:ewallet/app/shared/models/financial_register.dart';
 import 'package:ewallet/app/shared/widgets/custom_app_bar.dart';
@@ -37,7 +37,7 @@ class _UpdateFinancialRegisterPageState
     return Scaffold(
       backgroundColor: BACKGROUND_COLOR,
       appBar: AppBar(
-        title: CustomAppBar(userName: _appStore.user.name),
+        title: CustomAppBarWidget(userName: _appStore.user.name),
         backgroundColor: PRIMARY_COLOR,
       ),
       body: Container(

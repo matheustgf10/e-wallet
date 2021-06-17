@@ -25,6 +25,10 @@ class _FinancialRegisterCardCustomState
         padding: const EdgeInsets.all(8),
         child: Container(
           child: ListTile(
+            // leading: Container(
+            //     alignment: Alignment.centerLeft,
+            //     child: _appStore.user.financialRegisterList[widget.index]
+            //         .getIcon()),
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -47,14 +51,24 @@ class _FinancialRegisterCardCustomState
                       : Colors.green),
             ),
             trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                _appStore.user.financialRegisterList[widget.index].getIcon(),
+                //_appStore.user.financialRegisterList[widget.index].getIcon(),
+                Container(
+                  child: Text(
+                    _appStore.user.convertValueToRealPattern(
+                        value: _appStore
+                            .user.financialRegisterList[widget.index].value),
+                    style: TextStyle(),
+                  ),
+                ),
                 SizedBox(height: 5),
                 Text(
                   _appStore.user.financialRegisterList[widget.index]
                           .dateRegister.day
                           .toString() +
-                      '/' +
+                      '/0' +
                       _appStore.user.financialRegisterList[widget.index]
                           .dateRegister.month
                           .toString() +

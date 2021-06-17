@@ -20,6 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   build_runner: ^2.0.2
+  carousel_slider: ^4.0.0-nullsafety.0
   cupertino_icons: ^1.0.2
   flutter_mobx: ^2.0.0
   flutter_modular: ^3.2.0
@@ -38,6 +39,7 @@ flutter:
   assets:
     - lib/app/shared/assets/img/logo.png
     - lib/app/shared/assets/img/arrow_right.png
+    - lib/app/shared/assets/img/oval.png
   fonts:
     - family: Roboto Regular
       fonts:

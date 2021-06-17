@@ -1,6 +1,6 @@
 import 'package:ewallet/app/app_store.dart';
 import 'package:ewallet/app/modules/home/home_store.dart';
-import 'package:ewallet/app/modules/home/widgets/dropdown_widget.dart';
+import 'package:ewallet/app/modules/home/widgets/financial_register_widgets/dropdown_widget.dart';
 import 'package:ewallet/app/shared/models/financial_register.dart';
 import 'package:ewallet/app/shared/models/user.dart';
 import 'package:flutter/material.dart';

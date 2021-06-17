@@ -1,8 +1,9 @@
 import 'package:ewallet/app/shared/models/user.dart';
+import 'package:ewallet/app/shared/widgets/account_circles_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../app_store.dart';
+import '../../../../app_store.dart';
 import 'create_account_widget.dart';
 
 class AccountCard extends StatefulWidget {
@@ -25,7 +26,7 @@ class _AccountCardState extends State<AccountCard> {
     double value = widget.user.getAccountTotalValue(
         idAccount: widget.user.accountList[widget.index].idAccount);
     return InkWell(
-      //createAccount
+      // * create account
       onTap: () {
         showModalBottomSheet(
             context: context,
@@ -34,7 +35,7 @@ class _AccountCardState extends State<AccountCard> {
                   isEditing: false, height: height, width: width);
             });
       },
-      //Edit account
+      // * modify account
       onLongPress: () {
         showModalBottomSheet(
             context: context,
@@ -48,35 +49,41 @@ class _AccountCardState extends State<AccountCard> {
       },
       child: Container(
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(20),
           child: Container(
+            height: 100,
             color: widget.user.accountList[widget.index].color,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(
-                    widget.user.accountList[widget.index].nameAccount,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                AccountCirclesCardWidget(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        widget.user.accountList[widget.index].nameAccount,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 5),
-                  child: Text(
-                    widget.user.convertValueToRealPattern(value: value),
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: (value.isNegative)
-                          ? Colors.red[600]
-                          : Colors.green[600],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, top: 5),
+                      child: Text(
+                        widget.user.convertValueToRealPattern(value: value),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              (value.isNegative) ? Colors.white : Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),

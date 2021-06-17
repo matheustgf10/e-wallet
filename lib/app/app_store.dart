@@ -1,5 +1,6 @@
 import 'package:ewallet/app/shared/models/financial_register.dart';
 import 'package:ewallet/app/shared/models/user.dart';
+import 'package:ewallet/app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
@@ -56,7 +57,22 @@ abstract class AppStoreBase with Store {
 
     user.createAccount(
       nameAccount: 'Carteira',
-      color: Colors.orange[100]?.withOpacity(0.9),
+      color: PRIMARY_COLOR,
+    );
+
+    user.createAccount(
+      nameAccount: 'Cartão de Crédito',
+      color: Colors.blue[400],
+    );
+
+    user.createAccount(
+      nameAccount: 'Banco Inter',
+      color: BANK_INTERMEDIUM_COLOR,
+    );
+
+    user.createAccount(
+      nameAccount: 'Nubank',
+      color: PURPLE_ACCENT_COLOR,
     );
 
     return user;

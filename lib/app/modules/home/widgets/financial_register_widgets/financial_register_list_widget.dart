@@ -1,6 +1,6 @@
 import 'package:ewallet/app/app_store.dart';
 import 'package:ewallet/app/modules/home/pages/update_financial_register_page.dart';
-import 'package:ewallet/app/modules/home/widgets/financial_register_card_custom.dart';
+import 'package:ewallet/app/modules/home/widgets/financial_register_widgets/financial_register_card_custom.dart';
 import 'package:ewallet/app/shared/models/account.dart';
 import 'package:ewallet/app/shared/models/financial_register.dart';
 import 'package:flutter/material.dart';
