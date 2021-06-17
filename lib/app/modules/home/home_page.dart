@@ -52,20 +52,27 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                   mainAxisSpacing: 20,
                   mainAxisExtent: 80,
                 ),
-                itemCount: _appStore.user.accountList.length,
+                itemCount: _appStore.user.accountList.length + 1,
                 itemBuilder: (_, index) {
-                  return (index == _appStore.user.accountList.length - 1)
-                      ? Row(
-                          children: [
-                            AccountCard(user: _appStore.user, index: index),
-                            Spacer(),
-                            Container(
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                child: Text('+'),
+                  return (index == _appStore.user.accountList.length)
+                      ? Container(
+                          child: Row(
+                            children: [
+                              Container(
+                                height: double.maxFinite,
+                                width: 180 / 2,
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Center(
+                                    child: Text(
+                                      '+',
+                                      style: TextStyle(fontSize: 36),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            )
-                          ],
+                            ],
+                          ),
                         )
                       : AccountCard(user: _appStore.user, index: index);
                 },
