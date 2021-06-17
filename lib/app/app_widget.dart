@@ -8,6 +8,9 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Slidy',
       theme: ThemeData(
+        fontFamily: 'Roboto Regular',
+        textTheme:
+            TextTheme(headline1: TextStyle(fontFamily: 'Roboto Regular')),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             primary: PRIMARY_COLOR,

@@ -38,10 +38,10 @@ flutter:
   assets:
     - lib/app/shared/assets/img/logo.png
     - lib/app/shared/assets/img/arrow_right.png
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Roboto Regular
+      fonts:
+        - asset: lib/app/shared/assets/fonts/Roboto/Roboto-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

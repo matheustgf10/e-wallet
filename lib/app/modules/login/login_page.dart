@@ -32,10 +32,27 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Container(
-                    child: Text(
-                  'Conecte-se para continuar',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 22),
-                )),
+                  child: Text(
+                    'Conecte-se para continuar',
+                    style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Container(
+                  child: Text(
+                    'Conecte-se para continuar',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
               ),
               Container(
                 child: TextFieldWidget(
