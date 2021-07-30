@@ -1,3 +1,7 @@
+import 'package:ewallet/app/shared/models/account.dart';
+import 'package:ewallet/app/shared/models/financial_register.dart';
+import 'package:ewallet/app/shared/models/user.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 part 'login_store.g.dart';
