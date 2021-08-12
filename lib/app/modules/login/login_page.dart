@@ -18,77 +18,110 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
   Widget build(BuildContext context) {
     _appStore.setSize(context: context);
     return Scaffold(
-        backgroundColor: BACKGROUND_COLOR,
-        body: Container(
-          height: _appStore.height,
-          width: _appStore.width,
-          child: Column(
-            children: [
-              SizedBox(
-                height: _appStore.height * 0.15,
-              ),
-              Container(
-                  child: Image.asset('lib/app/shared/assets/img/logo.png')),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  child: Text(
-                    'Conecte-se para continuar',
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 22,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                child: TextFieldWidget(
-                  label: 'E-mail: ',
-                  icon: Icon(Icons.person_sharp),
-                ),
-              ),
-              Container(
-                child: TextFieldWidget(
-                  label: 'Senha: ',
-                  icon: Icon(Icons.remove_red_eye_outlined),
-                ),
-              ),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.only(
-                            left: 40, right: 40, top: 20, bottom: 20)),
-                    onPressed: () {
-                      Modular.to.pushReplacementNamed('/home',
-                          arguments: _appStore.user);
-                    },
+      backgroundColor: PURPLE_COLOR,
+      body: LayoutBuilder(builder: (_, constraints) {
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: Container(
+            height: _appStore.height,
+            width: _appStore.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
                     child: Text(
-                      'Entrar',
+                  'Bem vindo',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 26,
+                    fontFamily: 'Roboto',
+                  ),
+                )),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Container(
+                    child: Text(
+                      'Conecte-se para continuar',
                       style: TextStyle(
-                        fontSize: 20,
                         fontFamily: 'Roboto',
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
                       ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                child: Text(
-                  'Esqueceu a senha?',
-                  style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 16,
-                      color: SECONDARY_COLOR),
+                Container(
+                  child: TextFormField(
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)),
+                      labelStyle: TextStyle(color: Colors.white),
+                      labelText: 'E-mail',
+                      alignLabelWithHint: true,
+                      suffixIcon: Icon(
+                        Icons.person_sharp,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: _appStore.height * 0.05,
-              ),
-            ],
+                SizedBox(height: 10),
+                Container(
+                  child: TextFormField(
+                    obscureText: true,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)),
+                      labelStyle: TextStyle(color: Colors.white),
+                      labelText: 'Senha',
+                      suffixIcon: Icon(
+                        Icons.remove_red_eye_outlined,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.only(
+                              left: 40, right: 40, top: 20, bottom: 20)),
+                      onPressed: () {
+                        Modular.to
+                            .pushNamed('/home', arguments: _appStore.user);
+                      },
+                      child: Text(
+                        'Entrar',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Roboto',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    'Esqueceu a senha?',
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 16,
+                        color: Colors.white),
+                  ),
+                ),
+                SizedBox(
+                  height: _appStore.height * 0.05,
+                ),
+              ],
+            ),
           ),
-        ));
+        );
+      }),
+    );
   }
 }

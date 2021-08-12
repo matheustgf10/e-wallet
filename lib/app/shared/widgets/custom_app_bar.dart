@@ -1,5 +1,6 @@
 import 'package:ewallet/app/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class CustomAppBarWidget extends StatefulWidget {
   late String userName;
@@ -50,8 +51,13 @@ class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
                 ],
               ),
               Spacer(),
-              Container(
-                child: Icon(Icons.tune, color: Colors.white),
+              InkWell(
+                onTap: () {
+                  Modular.to.pop(context);
+                },
+                child: Container(
+                  child: Icon(Icons.tune, color: Colors.white),
+                ),
               ),
             ],
           ),
